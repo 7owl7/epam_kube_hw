@@ -31,15 +31,18 @@ storage-provisioner                         1/1     Running     2          23h
  minikube, при этом автоматически не перезапускается в случае смерти пода.
  Не смог понять кто именно запускает данный под, при перезапуске сервиса kubelet, при "убитом" поде - новый экземпляр не запускается.
 
+ 3. **ingress-nginx-admission-create-ft64h, ingress-nginx-admission-patch-kxw54** -
+   данные поды созданы job-контроллером, это поды для одноразового запуска, которые после успешного завершения своей работы больше не перезапускаются.
+
+ 4. **kube-proxy-zlvk8** - создается контроллером DaemonSet, который запускает экземпляр данного пода на всех узлах кластера
+
+
 
   Поды созданные в рамках deployments запускаются kubelet-ом, который получает информацию о необходимости запуска новых подов (контейнеров) периодически обращаясь к apiserver-у и сверяя полученную информацию с реальным состоянием  ноды на которой он запущен. Назначение пода конкретному узлу осуществляет Kubernetes scheduler.
 
- 3. **ingress-nginx-admission-create-ft64h, ingress-nginx-admission-patch-kxw54** -
-  данные поды созданы job-контроллером, это поды для одноразового запуска, которые после успешного завершения своей работы больше не перезапускаются.
+ 5. **coredns-74ff55c5b-qk8j5**  - создан в рамках Deployment coredns, Controlled By:  ReplicaSet/coredns-74ff55c5b
+ 6. **ingress-nginx-controller-558664778f** - создан в рамках  Deployment/ingress-nginx-controller  Controlled By:  ReplicaSet/ingress-nginx-controller-558664778f
+ 7. **metrics-server-6d74fbf577** создан в рамках Deployment metrics-server Controlled By:  ReplicaSet/metrics-server-6d74fbf577
 
- 4. **coredns-74ff55c5b-qk8j5**  - создан в рамках Deployment coredns, Controlled By:  ReplicaSet/coredns-74ff55c5b
- 5. **ingress-nginx-controller-558664778f** - создан в рамках  Deployment/ingress-nginx-controller  Controlled By:  ReplicaSet/ingress-nginx-controller-558664778f
- 6. **metrics-server-6d74fbf577** создан в рамках Deployment metrics-server Controlled By:  ReplicaSet/metrics-server-6d74fbf577
- 7. **kube-proxy-zlvk8** - создается контроллером DaemonSet, который запускает экземпляр данного пода на всех узлах кластера
 
 За перезапуск подов непосредственно на узле отвечает kubelet, основываясь на restartPolicy (по умолчанию Always) конкретного пода.

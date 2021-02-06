@@ -38,11 +38,11 @@ storage-provisioner                         1/1     Running     2          23h
 
 
 
-  Поды созданные в рамках deployments запускаются kubelet-ом, который получает информацию о необходимости запуска новых подов (контейнеров) периодически обращаясь к apiserver-у и сверяя полученную информацию с реальным состоянием  ноды на которой он запущен. Назначение пода конкретному узлу осуществляет Kubernetes scheduler.
+  Поды созданные в рамках deployments запускаются kubelet-ом, который получает информацию о необходимости запуска новых подов (контейнеров) периодически обращаясь к apiserver-у и сверяя полученную информацию с реальным состоянием узла на котором он запущен. Назначение пода конкретному узлу осуществляет Kubernetes scheduler.
 
- 5. **coredns-74ff55c5b-qk8j5**  - создан в рамках Deployment coredns, Controlled By:  ReplicaSet/coredns-74ff55c5b
+ 5. **coredns-74ff55c5b-qk8j5**  - создан в рамках Deployment/coredns, Controlled By:  ReplicaSet/coredns-74ff55c5b
  6. **ingress-nginx-controller-558664778f** - создан в рамках  Deployment/ingress-nginx-controller  Controlled By:  ReplicaSet/ingress-nginx-controller-558664778f
- 7. **metrics-server-6d74fbf577** создан в рамках Deployment metrics-server Controlled By:  ReplicaSet/metrics-server-6d74fbf577
+ 7. **metrics-server-6d74fbf577** создан в рамках Deployment/metrics-server Controlled By:  ReplicaSet/metrics-server-6d74fbf577
 
 
 За перезапуск подов непосредственно на узле отвечает kubelet, основываясь на restartPolicy (по умолчанию Always) конкретного пода.

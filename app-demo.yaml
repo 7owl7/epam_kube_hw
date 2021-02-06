@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: app-demo
+  name: app-demo
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: app-demo
+  template:
+    metadata:
+      labels:
+        app: app-demo
+    spec:
+      containers:
+      - image: nginx:latest
+        name: nginx
+        ports:
+        - containerPort: 80
+        volumeMounts:
+          - name: config-nginx
+            mountPath: /etc/nginx/conf.d
+      volumes:
+        - name: config-nginx
+          configMap:
+            name: nginx-configmap
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: app-demo
+  name: app-demo
+spec:
+  type: ClusterIP
+  selector:
+    app: app-demo
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
